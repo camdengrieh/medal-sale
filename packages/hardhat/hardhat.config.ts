@@ -21,7 +21,7 @@ const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.17",
+    version: "0.8.26",
     settings: {
       optimizer: {
         enabled: true,
@@ -30,7 +30,7 @@ const config: HardhatUserConfig = {
       },
     },
   },
-  defaultNetwork: "localhost",
+  defaultNetwork: "hardhat",
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer
@@ -42,7 +42,7 @@ const config: HardhatUserConfig = {
     // If the network you are looking for is not here you can add new network settings
     hardhat: {
       forking: {
-        url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,
+        url: `https://base-mainnet.g.alchemy.com/v2/I3UQLVpbIGB04EAwZEixgvJtrpMnaV9N`,
         enabled: process.env.MAINNET_FORKING_ENABLED === "true",
       },
     },
