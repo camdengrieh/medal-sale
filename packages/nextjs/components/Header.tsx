@@ -12,6 +12,7 @@ type HeaderMenuLink = {
   label: string;
   href: string;
   icon?: React.ReactNode;
+  target?: string;
 };
 
 export const menuLinks: HeaderMenuLink[] = [
@@ -19,6 +20,7 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Home",
     href: "https://brucejennerolympicgold.com",
     icon: <HomeIcon className="h-4 w-4" />,
+    target: "_blank",
   },
   {
     label: "Auction",
@@ -29,6 +31,7 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Twitter",
     href: "https://twitter.com/1976medal",
     icon: <AtSymbolIcon className="h-4 w-4" />,
+    target: "_blank",
   },
   {
     label: "Debug Contracts",
@@ -42,13 +45,15 @@ export const HeaderMenuLinks = () => {
 
   return (
     <>
-      {menuLinks.map(({ label, href, icon }) => {
+      {menuLinks.map(({ label, href, icon, target }) => {
         const isActive = pathname === href;
         return (
           <li key={href}>
             <Link
               href={href}
               passHref
+              target={target}
+              rel={target === "_blank" ? "noopener noreferrer" : undefined}
               className={`${
                 isActive ? "bg-secondary shadow-md" : ""
               } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
