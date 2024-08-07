@@ -39,7 +39,7 @@ export const Contributor = ({ isConnected, userAddress, saleBalance }: Contribut
   return (
     <div className="w-full flex justify-center py-10 relative">
       <div className="w-4/5 max-w-5xl bg-base-300 shadow-xl p-8 relative z-10 neon-border">
-        <h1 className="text-3xl font-bold mb-4 text-center" style={{ color: "#FCB131" }}>
+        <h1 className="text-3xl font-bold mb-4 text-center bg-gradient-to-br from-yellow-500 via-amber-200 to-amber-400 bg-clip-text text-transparent">
           CONTRIBUTE
         </h1>
         <p className="text-lg mb-6 text-white text-center">

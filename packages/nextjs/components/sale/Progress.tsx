@@ -40,7 +40,7 @@ export const SaleProgress = ({ saleBalance, saleAddress }: SaleProgressProps) =>
 
   return (
     <div className="w-full max-w-5xl bg-base-300 shadow-xl p-8 relative z-10 neon-border">
-      <h1 className="text-3xl font-bold mb-4 text-center" style={{ color: "#FCB131" }}>
+      <h1 className="text-3xl font-bold mb-4 text-center bg-gradient-to-br from-yellow-500 via-amber-200 to-amber-400 bg-clip-text text-transparent">
         AUCTION STATS
       </h1>
       <p className="text-lg mb-6 text-white text-center">
