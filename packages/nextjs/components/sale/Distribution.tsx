@@ -13,7 +13,7 @@ export const Distribution = ({ buyersContributions, buyers, totalRaised }: Distr
   //const { data: tokenContract } = useScaffoldContract({ contractName: "Olympic1976GoldFragments"});
 
   return (
-    <div className="flex flex-col p-2">
+    <div className="card card-body bg-base-300 flex flex-col shadow-xl">
       <h1 className="text-xl text-center">Distribution</h1>
       <div className="flex flex-col gap-y-2 justify-center">
         {buyersContributions &&
