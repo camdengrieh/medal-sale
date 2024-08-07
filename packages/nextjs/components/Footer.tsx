@@ -53,7 +53,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
               > */}
-              <span className="">Jenner Team & 3Studio</span>
+              <span className="">3Studio & Mock Capital</span>
             </div>
           </div>
         </ul>

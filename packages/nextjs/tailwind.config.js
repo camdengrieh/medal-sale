@@ -1,7 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}", 'node_modules/daisyui/dist/**/*.js',
-    'node_modules/react-daisyui/dist/**/*.js'],
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./utils/**/*.{js,ts,jsx,tsx}",
+    "node_modules/daisyui/dist/**/*.js",
+    "node_modules/react-daisyui/dist/**/*.js",
+  ],
   plugins: [require("daisyui")],
   darkTheme: "dark",
   darkMode: ["selector", "[data-theme='dark']"],
@@ -45,17 +50,17 @@ module.exports = {
         dark: {
           primary: "#A3C4F3", // Pastel blue
           "primary-content": "#383838", // Dark gray for contrast
-          secondary: "#F4A7A3", // Pastel red
-          "secondary-content": "#383838", // Dark gray for contrast
+          secondary: "#FCB131", // header buttons
+          "secondary-content": "#FFFFFF", // Dark gray for contrast
           accent: "#F4A7A3", // Pastel red
           "accent-content": "#383838", // Dark gray for contrast
           neutral: "#383838", // Dark gray
-          "neutral-content": "#FAF3E0", // Cream for white content
-          "base-100": "#FAF3E0", // Cream for base
-          "base-200": "#F8E8D2", // Lighter cream for base
-          "base-300": "#F3D9B7", // Pastel cream for base
+          "neutral-content": "#FFFFFF", // Cream for white content
+          "base-100": "#0F0F0F", // Cream for base
+          "base-200": "#0F0F0F", // Lighter cream for base
+          "base-300": "#242323", // Pastel cream for base
           "base-400": "#E8C298", // Pastel cream for base
-          "base-content": "#383838", // Dark gray for contrast
+          "base-content": "#FFFFFF", // Dark gray for contrast
           info: "#A3C4F3", // Pastel blue
           success: "#A8E3A0", // Pastel green
           warning: "#FAD792", // Pastel yellow
