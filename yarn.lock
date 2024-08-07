@@ -2310,7 +2310,7 @@ __metadata:
     autoprefixer: ^10.4.12
     blo: ^1.0.1
     burner-connector: ^0.0.8
-    daisyui: 4.5.0
+    daisyui: 4.12.10
     eslint: ^8.15.0
     eslint-config-next: ^14.0.4
     eslint-config-prettier: ^9.1.0
@@ -2323,6 +2323,8 @@ __metadata:
     qrcode.react: ^3.1.0
     react: ^18.2.0
     react-copy-to-clipboard: ^5.1.0
+    react-countdown: ^2.3.5
+    react-daisyui: ^5.0.3
     react-dom: ^18.2.0
     react-hot-toast: ^2.4.0
     tailwindcss: ^3.4.3
@@ -5737,15 +5739,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:4.5.0":
-  version: 4.5.0
-  resolution: "daisyui@npm:4.5.0"
+"daisyui@npm:4.12.10":
+  version: 4.12.10
+  resolution: "daisyui@npm:4.12.10"
   dependencies:
     css-selector-tokenizer: ^0.8
     culori: ^3
     picocolors: ^1
     postcss-js: ^4
-  checksum: 156182dec5b8792df39602984e94916f997f304d5b260a2ff0ab6908bfa8e8a84213481bcb81296d922c7c93c91f53948fd81ec5135ba5072a1460298ab2aa43
+  checksum: 506e7545502b75f43995f6fd460c907e95af03b12d750b49dbec14338d81d91b540cded0179004c87d2a326d024500b8529a456f70819bff24011b269f76aeec
   languageName: node
   linkType: hard
 
@@ -11826,7 +11828,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -12007,6 +12009,30 @@ __metadata:
   peerDependencies:
     react: ^15.3.0 || 16 || 17 || 18
   checksum: f00a4551b9b63c944a041a6ab46af5ef20ba1106b3bc25173e7ef9bffbfba17a613368682ab8820cfe8d4b3acc5335cd9ce20229145bcc1e6aa8d1db04c512e5
+  languageName: node
+  linkType: hard
+
+"react-countdown@npm:^2.3.5":
+  version: 2.3.5
+  resolution: "react-countdown@npm:2.3.5"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">= 15"
+    react-dom: ">= 15"
+  checksum: 24289f40591e88003052270e4eb9f7a87838e403ec2036fbd5ef99d57851c8d9739dae619d65f339494e582e34e2691c033a975bd8f7416730fc9beaf76a2b4b
+  languageName: node
+  linkType: hard
+
+"react-daisyui@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "react-daisyui@npm:5.0.3"
+  peerDependencies:
+    daisyui: ^4.12.10
+    react: ">=16"
+    react-dom: ">=16"
+    tailwindcss: ">=3.2.7"
+  checksum: 41b07899b1cb6abb7e2dd07d1d6510037b39a7ce49a3619b833c111bf933b9f1c11ab646aa6e8a2c68ec22c6e378b772325235f223c8bb7f3ad43309c16cfdd7
   languageName: node
   linkType: hard
 

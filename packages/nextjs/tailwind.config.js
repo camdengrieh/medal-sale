@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}"],
+  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}", 'node_modules/daisyui/dist/**/*.js',
+    'node_modules/react-daisyui/dist/**/*.js'],
   plugins: [require("daisyui")],
   darkTheme: "dark",
   darkMode: ["selector", "[data-theme='dark']"],
@@ -9,22 +10,23 @@ module.exports = {
     themes: [
       {
         light: {
-          primary: "#93BBFB",
-          "primary-content": "#212638",
-          secondary: "#DAE8FF",
-          "secondary-content": "#212638",
-          accent: "#93BBFB",
-          "accent-content": "#212638",
-          neutral: "#212638",
-          "neutral-content": "#ffffff",
-          "base-100": "#ffffff",
-          "base-200": "#f4f8ff",
-          "base-300": "#DAE8FF",
-          "base-content": "#212638",
-          info: "#93BBFB",
-          success: "#34EEB6",
-          warning: "#FFCF72",
-          error: "#FF8863",
+          primary: "#A3C4F3", // Pastel blue
+          "primary-content": "#383838", // Dark gray for contrast
+          secondary: "#F4A7A3", // Pastel red
+          "secondary-content": "#383838", // Dark gray for contrast
+          accent: "#F4A7A3", // Pastel red
+          "accent-content": "#383838", // Dark gray for contrast
+          neutral: "#383838", // Dark gray
+          "neutral-content": "#FAF3E0", // Cream for white content
+          "base-100": "#FAF3E0", // Cream for base
+          "base-200": "#F8E8D2", // Lighter cream for base
+          "base-300": "#F3D9B7", // Pastel cream for base
+          "base-400": "#E8C298", // Pastel cream for base
+          "base-content": "#383838", // Dark gray for contrast
+          info: "#A3C4F3", // Pastel blue
+          success: "#A8E3A0", // Pastel green
+          warning: "#FAD792", // Pastel yellow
+          error: "#F4A7A3", // Pastel red
 
           "--rounded-btn": "9999rem",
 
@@ -41,22 +43,23 @@ module.exports = {
       },
       {
         dark: {
-          primary: "#212638",
-          "primary-content": "#F9FBFF",
-          secondary: "#323f61",
-          "secondary-content": "#F9FBFF",
-          accent: "#4969A6",
-          "accent-content": "#F9FBFF",
-          neutral: "#F9FBFF",
-          "neutral-content": "#385183",
-          "base-100": "#385183",
-          "base-200": "#2A3655",
-          "base-300": "#212638",
-          "base-content": "#F9FBFF",
-          info: "#385183",
-          success: "#34EEB6",
-          warning: "#FFCF72",
-          error: "#FF8863",
+          primary: "#A3C4F3", // Pastel blue
+          "primary-content": "#383838", // Dark gray for contrast
+          secondary: "#F4A7A3", // Pastel red
+          "secondary-content": "#383838", // Dark gray for contrast
+          accent: "#F4A7A3", // Pastel red
+          "accent-content": "#383838", // Dark gray for contrast
+          neutral: "#383838", // Dark gray
+          "neutral-content": "#FAF3E0", // Cream for white content
+          "base-100": "#FAF3E0", // Cream for base
+          "base-200": "#F8E8D2", // Lighter cream for base
+          "base-300": "#F3D9B7", // Pastel cream for base
+          "base-400": "#E8C298", // Pastel cream for base
+          "base-content": "#383838", // Dark gray for contrast
+          info: "#A3C4F3", // Pastel blue
+          success: "#A8E3A0", // Pastel green
+          warning: "#FAD792", // Pastel yellow
+          error: "#F4A7A3", // Pastel red
 
           "--rounded-btn": "9999rem",
 

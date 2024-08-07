@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { MedalSale, Olympic1976GoldFragments } from "../typechain-types";
+import { MedalSale, Olympic1976GoldFragments, Olympic1976GoldRights } from "../typechain-types";
 import { parseEther } from "ethers";
 
 describe("MedalSale", function () {
@@ -10,8 +10,10 @@ describe("MedalSale", function () {
   let mockERC20: Olympic1976GoldFragments;
   before(async () => {
     const mockERC20Factory = await ethers.getContractFactory("Olympic1976GoldFragments");
+    const MockRights = await ethers.getContractFactory("Olympic1976GoldRights");
     const medalSaleFactory = await ethers.getContractFactory("MedalSale");
-    mockERC20 = (await mockERC20Factory.deploy()) as Olympic1976GoldFragments;
+    const mockMedalRights = (await MockRights.deploy()) as Olympic1976GoldRights;
+    mockERC20 = (await mockERC20Factory.deploy(await mockMedalRights.getAddress())) as Olympic1976GoldFragments;
     await mockERC20.waitForDeployment();
     const tokenAddress = await mockERC20.getAddress();
     console.log("MockERC20 deployed to:", tokenAddress);
@@ -33,9 +35,8 @@ describe("MedalSale", function () {
 
     it("Should prevent non-owner from setting a new end time", async function () {
       const [, buyer1] = await ethers.getSigners();
-      const _endTime = Date.now() + 1000 * 60 * 60 * 24 * 7; // 7 days from now
 
-      await expect(medalSale.connect(buyer1).openSale(_endTime)).to.be.revertedWithCustomError(
+      await expect(medalSale.connect(buyer1).openSale()).to.be.revertedWithCustomError(
         medalSale,
         "OwnableUnauthorizedAccount",
       );
@@ -50,16 +51,14 @@ describe("MedalSale", function () {
 
     it("Should allow setting a new end time and start sale", async function () {
       const [owner] = await ethers.getSigners();
-      const _endTime = Date.now() + 1000 * 60 * 60 * 24 * 7; // 7 days from now
+      const _endTime = 1724328000;
 
-      await medalSale.connect(owner).openSale(_endTime);
+      await medalSale.connect(owner).openSale();
       expect(await medalSale.saleEndTime()).to.equal(_endTime);
     });
 
-    it("Should not be able to set a new end time after sale has started", async function () {
-      const _endTime = Date.now() + 1000 * 60 * 60 * 24 * 7; // 7 days from now
-
-      await expect(medalSale.openSale(_endTime)).to.be.revertedWith("Sale has already started");
+    it("Should not be able to start the sale again", async function () {
+      await expect(medalSale.openSale()).to.be.revertedWith("Sale has already started");
     });
 
     it("Should be able to buy tokens after sale has started", async function () {
@@ -103,7 +102,7 @@ describe("MedalSale", function () {
       expect(await medalSale.bonusEthSpent()).to.equal(parseEther("8.5"));
     });
 
-    it("Should only allow owner to close the sale", async function () {
+    it("Should only allow owner to close the sale and after time elaspsed", async function () {
       const [owner, buyer] = await ethers.getSigners();
 
       await expect(medalSale.connect(buyer).closeSale()).to.be.revertedWithCustomError(
@@ -117,7 +116,10 @@ describe("MedalSale", function () {
         DISTRIBUTION,
         REFUNDING,
       }
-      await medalSale.connect(owner).closeSale();
+      await expect(medalSale.connect(owner).closeSale()).to.be.revertedWith("Sale time needs to elapse");
+      await medalSale.changeEndTime(0);
+
+      await medalSale.closeSale();
       expect(await medalSale.saleStatus()).to.equal(MedalSaleStatus.CLOSED);
     });
 
@@ -177,19 +179,22 @@ describe("MedalSale", function () {
     it("Should only allow owner to withdraw ETH after the sale is closed and distribute", async function () {
       const [owner, buyer] = await ethers.getSigners();
 
-      const platformFeeDestination = "0x818690e568492772Ae85ebD30532C9E4c3740d45";
-      const jennerTreasury = "0x857473A05370bC351c4b4488C9BBEAF765CC3725";
+      const platformFeeDestination = "0xf87Eaea53f15189385a5fb33b6Ad0c61C6047d47";
+      const jennerTreasury = "0xC3Cc6d2db567aF6669beC02c8084E71B1714643a";
 
       await expect(medalSale.connect(buyer).withdrawEth()).to.be.revertedWithCustomError(
         medalSale,
         "OwnableUnauthorizedAccount",
       );
 
+      const presaleContractBalance = await ethers.provider.getBalance(await medalSale.getAddress());
+      const platformFee = presaleContractBalance / 50n;
+
       await medalSale.connect(owner).withdrawEth();
       expect(await medalSale.addressEthSpent(owner.address)).to.equal(0);
 
-      expect(await ethers.provider.getBalance(platformFeeDestination)).to.be.gt(0);
-      expect(await ethers.provider.getBalance(jennerTreasury)).to.be.gt(0);
+      expect(await ethers.provider.getBalance(platformFeeDestination)).to.be.equal(platformFee);
+      expect(await ethers.provider.getBalance(jennerTreasury)).to.be.equal(presaleContractBalance - platformFee);
     });
   });
 });
