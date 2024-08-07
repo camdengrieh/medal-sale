@@ -1,11 +1,12 @@
 import { useDeployedContractInfo, useScaffoldReadContract } from "../scaffold-eth";
 import { parseAbi } from "viem";
-import { useReadContracts } from "wagmi";
+import { useBalance, useReadContracts } from "wagmi";
 
 const useSaleContractInfo = (userAddress: string) => {
   const { data: saleContractInfo } = useDeployedContractInfo("MedalSale");
 
   const saleAddress = saleContractInfo?.address;
+  const { data: saleBalance } = useBalance({ address: saleAddress as string });
   const saleContract = {
     address: saleAddress as string,
     abi: parseAbi([
@@ -60,6 +61,7 @@ const useSaleContractInfo = (userAddress: string) => {
   return {
     saleInfo,
     saleInfoLoading,
+    saleAddress,
     pricePerToken: saleInfo && saleInfo[0].result,
     tokenBalance: saleInfo && saleInfo[1].result,
     ethRaised: saleInfo && saleInfo[2].result,
@@ -67,6 +69,7 @@ const useSaleContractInfo = (userAddress: string) => {
     buyers,
     buyersBalances,
     buyerContributions,
+    saleBalance,
   };
 };
 
