@@ -12,7 +12,7 @@ type TradeCardProps = {
 };
 
 export const TradeCard = ({ connectedAddress }: TradeCardProps) => {
-  const { saleInfoLoading, ethSpent } = useSaleContractInfo(connectedAddress);
+  const { saleInfoLoading } = useSaleContractInfo(connectedAddress);
   const { data: medalContract } = useDeployedContractInfo("Olympic1976GoldFragments");
   const { tokenInfoLoading } = useTokenContractInfo(medalContract?.address as string);
   const [selectedBuyAmount, setSelectedBuyAmount] = useState("0.001");
@@ -21,7 +21,7 @@ export const TradeCard = ({ connectedAddress }: TradeCardProps) => {
   const { writeContractAsync: buyToken } = useScaffoldWriteContract("MedalSale");
 
   const setMaxBuyAmount = () => {
-    if (!balance || !ethSpent) return;
+    if (!balance) return;
     setSelectedBuyAmount(formatEther(balance?.value as bigint));
   };
 
