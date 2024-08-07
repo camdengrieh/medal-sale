@@ -31,7 +31,7 @@ contract MedalSaleReader {
         uint256[] memory _buyersBalances = new uint256[](_buyersLength);
 
         for (uint256 i; i < _buyers.length; i++) {
-            _buyersBalances[i] = medalSale.addressTokenBalances(_buyers[i]);
+            _buyersBalances[i] = medalSale.addressEthSpent(_buyers[i]);
         }
         
         return _buyersBalances;

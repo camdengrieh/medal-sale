@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 import { Contributor } from "~~/components/sale/Contibutor";
+import { Distribution } from "~~/components/sale/Distribution";
 import { SaleProgress } from "~~/components/sale/Progress";
 import { TradeCard } from "~~/components/sale/TradeCard";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
@@ -13,7 +14,7 @@ import { useWatchBalance } from "~~/hooks/scaffold-eth";
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
 
-  const { saleAddress } = useSaleContractInfo(connectedAddress as string);
+  const { saleAddress, buyers, buyerContributions } = useSaleContractInfo(connectedAddress as string);
 
   const {
     data: totalRaised,
@@ -22,7 +23,7 @@ const Home: NextPage = () => {
   } = useWatchBalance({
     address: saleAddress,
   });
-  const formattedBalance = totalRaised ? Number(formatEther(totalRaised.value)) : 0;
+  const formattedBalance = totalRaised ? Number(formatEther(totalRaised?.value)) : 0;
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -51,6 +52,11 @@ const Home: NextPage = () => {
             <RainbowKitCustomConnectButton />
           )}
           <SaleProgress saleAddress={saleAddress as string} saleBalance={formattedBalance} />
+          <Distribution
+            buyers={buyers as string[]}
+            totalRaised={formattedBalance}
+            buyersContributions={buyerContributions as bigint[]}
+          />
         </div>
       </div>
     </div>

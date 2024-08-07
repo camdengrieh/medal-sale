@@ -40,15 +40,9 @@ const useSaleContractInfo = (userAddress: string) => {
     ],
   });
 
-  const { data: buyersBalances } = useScaffoldReadContract({
-    contractName: "MedalSaleReader",
-    functionName: "getAllBuyersBalances",
-    args: [saleAddress],
-  });
-
   const { data: buyerContributions } = useScaffoldReadContract({
     contractName: "MedalSaleReader",
-    functionName: "getAllBuyersBalances",
+    functionName: "getAllBuyersContributions",
     args: [saleAddress],
   });
 
@@ -67,7 +61,6 @@ const useSaleContractInfo = (userAddress: string) => {
     userContribution: saleInfo && saleInfo[2].result,
     userBonus: saleInfo && saleInfo[3].result,
     buyers,
-    buyersBalances,
     buyerContributions,
     saleBalance,
   };
