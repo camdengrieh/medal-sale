@@ -37,25 +37,20 @@ export const Contributor = ({ isConnected, userAddress, saleBalance }: Contribut
   };
 
   return (
-    <div className="w-full flex justify-center py-10 relative">
-      <div className="w-4/5 max-w-5xl bg-base-300 shadow-xl p-8 relative z-10 neon-border">
-        <h1 className="text-3xl font-bold mb-4 text-center bg-gradient-to-br from-yellow-500 via-amber-200 to-amber-400 bg-clip-text text-transparent">
-          CONTRIBUTE
-        </h1>
-        <p className="text-lg mb-6 text-white text-center">
+    <div className="w-full flex justify-center py-10 relative animate-gold-border max-w-[612px]">
+      <div className="w-4/5 shadow-xl p-8 z-10 animate-border-child ">
+        <h1 className="text-3xl font-bold mb-4 text-center gold-gradient-text">CONTRIBUTE</h1>
+        <p className="text-md mb-6 text-white text-center">
           Below are your contribution details, including the ability to contribute ETH to the auction.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="text-xl text-white text-center">YOUR CONTRIBUTION:</div>
-          <div className="text-lg text-white text-center">{formatEther(userContribution || 0n)} ETH</div>
-          {userBonus !== 0n && (
-            <>
-              <div className="text-xl text-white text-center">BONUS CONTRIBUTION:</div>
-              <div className="text-lg text-white text-center">{formatEther(userBonus || 0n)} ETH</div>
-            </>
-          )}
-          <div className="text-xl text-white text-center">PERCENT OF SALE OWNED:</div>
-          <div className="text-lg text-white text-center">{percentageOfSale.toFixed(2)}%</div>
+        <div className="flex gap-y-2 text-md animate-gold-border rounded-xl justify-center">
+          <div className="animate-border-child ">
+            <div className=" text-white text-center">YOUR CONTRIBUTION: {formatEther(userContribution || 0n)} ETH</div>
+            {userBonus !== 0n && (
+              <div className=" text-white text-center">BONUS CONTRIBUTION: {formatEther(userBonus || 0n)} ETH</div>
+            )}
+            <div className=" text-white text-center">PERCENT OF SALE OWNED: {percentageOfSale.toFixed(4)}%</div>
+          </div>
         </div>
         {isConnected ? (
           <div className="flex flex-col items-center mt-6">
@@ -69,19 +64,14 @@ export const Contributor = ({ isConnected, userAddress, saleBalance }: Contribut
                 min={0.001}
                 placeholder="0.01"
               />
-              <button
-                onClick={setMaxBuyAmount}
-                className="inline-block rounded border-2 border-warning px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-warning transition duration-150 ease-in-out hover:border-warning-600 hover:bg-warning-50/50 hover:text-warning-600 focus:border-warning-600 focus:bg-warning-50/50 focus:text-warning-600 focus:outline-none focus:ring-0 active:border-warning-700 active:text-warning-700 motion-reduce:transition-none dark:hover:bg-yellow-950 dark:focus:bg-yellow-950"
-                style={{ color: "#FFFFFF" }}
-              >
+              <button onClick={setMaxBuyAmount} className="btn-primary-gold">
                 Max
               </button>
             </label>
             <button
               onClick={handleBuyToken}
               disabled={parseEther(selectedBuyAmount) > (balance?.value as bigint)}
-              className="inline-block rounded border-2 border-warning px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-warning transition duration-150 ease-in-out hover:border-warning-600 hover:bg-warning-50/50 hover:text-warning-600 focus:border-warning-600 focus:bg-warning-50/50 focus:text-warning-600 focus:outline-none focus:ring-0 active:border-warning-700 active:text-warning-700 motion-reduce:transition-none dark:hover:bg-yellow-950 dark:focus:bg-yellow-950"
-              style={{ color: "#FFFFFF" }}
+              className="btn-primary-gold"
             >
               Contribute 🥇
             </button>
@@ -94,7 +84,7 @@ export const Contributor = ({ isConnected, userAddress, saleBalance }: Contribut
             <RainbowKitCustomConnectButton />
           </div>
         )}
-        <p className="text-sm text-gray-500 text-center">
+        <p className="mt-1 text-sm gold-gradient-text text-center">
           Note: The amount you contribute will be used to purchase tokens at the current sale rate. Ensure you have
           sufficient balance before proceeding.
         </p>

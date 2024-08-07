@@ -1,17 +1,56 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 
 :root,
 [data-theme] {
-  --background-image: url('/background.jpg');
+  --background-image: url("/background.jpg");
+}
+
+@layer utilities {
+  .gold-gradient-text {
+    @apply bg-gradient-to-br from-yellow-500 via-amber-200 to-amber-400 bg-clip-text text-transparent;
+  }
+  .gold-gradient-border {
+    @apply bg-gradient-to-br from-yellow-500 via-amber-200 to-amber-400;
+    border-radius: calc(3.5rem - 1px);
+  }
+  
+  .btn-gold-hover {
+    @apply bg-gradient-to-br from-yellow-500 via-amber-200 to-amber-400;
+    transition: all 0.3s ease-in-out;
+  }
+  .btn-primary-gold {
+    @apply inline-block rounded border-2 border-warning px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-warning transition duration-150 ease-in-out hover:bg-warning hover:text-primary-content focus:outline-none active:border-warning motion-reduce:transition-none;
+    transition: all 0.3s ease-in-out;
+  }
+  .animate-gold-border {
+    @apply animate-border rounded-2xl bg-white bg-gradient-to-r from-yellow-500 via-amber-200 to-amber-400 bg-[length:400%_400%] p-1;
+  }
+  .animate-border-child {
+    @apply block w-full rounded-xl bg-base-300 px-3 py-2 font-bold text-white;
+  }
+  
+}
+
+.gold-border {
+  border: 2px solid #9f701f;
+  border-radius: 20px;
+  position: relative;
+  /* Use gold gradient like the gradient text */
+  box-shadow:
+    0 0 10px #9f701f,
+    0 0 10px #9f701f,
+    0 0 10px #9f701f;
+
+  /* Further reduced shadow blur */
 }
 
 body {
   background: var(--background-image) center center / cover no-repeat;
   min-height: 100vh;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-style: bold;
   font-weight: 400;
 }
@@ -22,10 +61,13 @@ body {
   position: relative;
   font-size: 1.25rem;
   padding: 0.75rem 1.5rem;
-  box-shadow: 0 0 5px #FCB131, 0 0 10px #FCB131, 0 0 15px #FCB131;
+  box-shadow:
+    0 0 5px #fcb131,
+    0 0 10px #fcb131,
+    0 0 15px #fcb131;
   /* Further reduced shadow blur */
-  background-color: #0F0F0F;
-  color: #FCB131;
+  background-color: #0f0f0f;
+  color: #fcb131;
   transition: all 0.3s ease-in-out;
   display: flex;
   align-items: center;
@@ -36,12 +78,15 @@ body {
   border: 4px solid #fcb13100;
   border-radius: 20px;
   position: relative;
-  box-shadow: 0 0 5px #FCB131, 0 0 10px #FCB131, 0 0 15px #FCB131;
+  box-shadow:
+    0 0 5px #fcb131,
+    0 0 10px #fcb131,
+    0 0 15px #fcb131;
   /* Further reduced shadow blur */
 }
 
 .neon-border::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -4px;
   left: -4px;
@@ -62,4 +107,3 @@ h4 {
   line-height: 1;
   font-weight: 700;
 }
-
