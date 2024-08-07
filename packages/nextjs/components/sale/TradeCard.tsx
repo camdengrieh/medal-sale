@@ -12,9 +12,9 @@ type TradeCardProps = {
 };
 
 export const TradeCard = ({ connectedAddress }: TradeCardProps) => {
-  const { saleInfoLoading, pricePerToken, ethSpent } = useSaleContractInfo(connectedAddress);
+  const { saleInfoLoading, ethSpent } = useSaleContractInfo(connectedAddress);
   const { data: medalContract } = useDeployedContractInfo("Olympic1976GoldFragments");
-  const { tokenInfoLoading, tokenSymbol } = useTokenContractInfo(medalContract?.address as string);
+  const { tokenInfoLoading } = useTokenContractInfo(medalContract?.address as string);
   const [selectedBuyAmount, setSelectedBuyAmount] = useState("0.001");
   const { data: balance } = useBalance({ address: connectedAddress as `0x${string}` });
 
@@ -30,7 +30,7 @@ export const TradeCard = ({ connectedAddress }: TradeCardProps) => {
   }
 
   return (
-    <div className="flex card card-body bg-base-300">
+    <div className="flex card card-body bg-base-300 shadow-xl">
       <div className="flex flex-col justify-center">
         <div className="flex flex-row gap-x-2 justify-center items-center">
           <label className="input flex items-center gap-2 w-60">
@@ -70,12 +70,6 @@ export const TradeCard = ({ connectedAddress }: TradeCardProps) => {
         {parseEther(selectedBuyAmount) > (balance?.value as bigint) && (
           <div className="text-center text-red-500">Insufficient balance</div>
         )}
-        <div className="flex flex-col justify-center text-center">
-          <div>Spend: {Number(selectedBuyAmount).toLocaleString() + " ETH"}</div>
-          <div>
-            To Receive: {formatEther(parseEther(selectedBuyAmount) * (pricePerToken ?? 0n)) + " " + tokenSymbol}
-          </div>
-        </div>
       </div>
     </div>
   );

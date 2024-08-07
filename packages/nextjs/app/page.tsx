@@ -15,12 +15,12 @@ const Home: NextPage = () => {
         <div className="px-5">
           <h1 className="text-center">
             <span className="block text-2xl mb-2">1976 Olympic Gold Medal</span>
-            <span className="block text-4xl font-bold">Public Fractional Auction</span>
+            <span className="block text-4xl font-bold">$MEDAL Fractional Auction</span>
           </h1>
         </div>
 
         <div className="flex-grow bg-base-400 mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
+          <div className="flex justify-center items-center gap-12 flex-col">
             {connectedAddress ? (
               <>
                 <TradeCard connectedAddress={connectedAddress} />

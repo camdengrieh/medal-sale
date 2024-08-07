@@ -6,7 +6,7 @@ type SaleProgressProps = {
   userAddress: string;
 };
 
-export const SaleProgress = ({ userAddress }: SaleProgressProps) => {
+export const Contributor = ({ userAddress }: SaleProgressProps) => {
   const { saleAddress } = useSaleContractInfo(userAddress);
   const Completionist = () => <span>You are good to go!</span>;
 
@@ -39,7 +39,7 @@ export const SaleProgress = ({ userAddress }: SaleProgressProps) => {
   return (
     <div className="card card-body flex flex-col text-center bg-base-300 shadow-xl">
       <>
-        <div className="text-2xl">Value Raised: </div>
+        <div className="text-2xl">Amount Contributed: </div>
         <Balance className="text-xl" address={saleAddress} />
         <div className="text-2xl">Auction ends in: </div>
         <Countdown className="text-xl" date={1724328419000} renderer={renderer} intervalDelay={0}>
