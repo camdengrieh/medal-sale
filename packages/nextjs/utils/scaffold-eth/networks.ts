@@ -69,6 +69,9 @@ export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
   [chains.arbitrumSepolia.id]: {
     color: "#28a0f0",
   },
+  [chains.base.id]: {
+    color: "#28a0f0",
+  },
   [chains.arbitrum.id]: {
     color: "#28a0f0",
   },
