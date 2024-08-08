@@ -51,7 +51,7 @@ export const HeaderMenuLinks = () => {
               rel={target === "_blank" ? "noopener noreferrer" : undefined}
               className={`${
                 isActive ? "outline-warning text-warning shadow-md" : ""
-              } outline hover:outline-warning hover:text-warning hover:shadow-md focus:!bg-warning active:!text-neutral py-1.5 px-3 text-sm rounded-md overflow-hidden`}
+              } outline hover:outline-warning hover:text-warning hover:shadow-md focus:outline-warning focus:!bg-warning focus:text-black active:!text-neutral py-1.5 px-3 text-sm rounded-md overflow-hidden`}
             >
               {icon}
               <span>{label}</span>
