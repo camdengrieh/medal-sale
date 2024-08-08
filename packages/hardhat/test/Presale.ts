@@ -103,7 +103,7 @@ describe("MedalSale", function () {
     });
 
     it("Should only allow owner to close the sale and after time elaspsed", async function () {
-      const [owner, buyer] = await ethers.getSigners();
+      const [owner, buyer, , , , buyer5] = await ethers.getSigners();
 
       await expect(medalSale.connect(buyer).closeSale()).to.be.revertedWithCustomError(
         medalSale,
@@ -116,7 +116,15 @@ describe("MedalSale", function () {
         DISTRIBUTION,
         REFUNDING,
       }
+
       await expect(medalSale.connect(owner).closeSale()).to.be.revertedWith("Sale time needs to elapse");
+      await medalSale.changeEndTime(0);
+      await expect(medalSale.connect(buyer5).buyTokens({ value: ethers.parseEther("2") })).to.be.revertedWith(
+        "Sale time has elapsed",
+      );
+      await expect(medalSale.connect(owner).closeSale()).to.be.revertedWith("Auction reserve not reached");
+      await medalSale.changeEndTime(1724328000);
+      await medalSale.connect(buyer5).buyTokens({ value: ethers.parseEther("277") });
       await medalSale.changeEndTime(0);
 
       await medalSale.closeSale();
@@ -133,7 +141,7 @@ describe("MedalSale", function () {
     });
 
     it("Should allow users to claim their tokens", async function () {
-      const [, buyer1, buyer2, buyer3, buyer4] = await ethers.getSigners();
+      const [, buyer1, buyer2, buyer3, buyer4, buyer5] = await ethers.getSigners();
 
       const totalEthSpent = await medalSale.ethRaised();
       const totalBonusEarned = await medalSale.bonusEthSpent();
@@ -151,10 +159,14 @@ describe("MedalSale", function () {
       const buyer4Spent = await medalSale.addressEthSpent(buyer4.address);
       const buyer4Bonus = await medalSale.addressBonusEarned(buyer4.address);
 
+      const buyer5Spent = await medalSale.addressEthSpent(buyer5.address);
+      const buyer5Bonus = await medalSale.addressBonusEarned(buyer5.address);
+
       const buyer1Tokens = (buyer1Spent + buyer1Bonus) * (tokensAvailable / (totalEthSpent + totalBonusEarned));
       const buyer2Tokens = (buyer2Spent + buyer2Bonus) * (tokensAvailable / (totalEthSpent + totalBonusEarned));
       const buyer3Tokens = (buyer3Spent + buyer3Bonus) * (tokensAvailable / (totalEthSpent + totalBonusEarned));
       const buyer4Tokens = (buyer4Spent + buyer4Bonus) * (tokensAvailable / (totalEthSpent + totalBonusEarned));
+      const buyer5Tokens = (buyer5Spent + buyer5Bonus) * (tokensAvailable / (totalEthSpent + totalBonusEarned));
 
       await medalSale.connect(buyer1).claimFractions();
       expect(await mockERC20.balanceOf(buyer1.address)).to.equal(buyer1Tokens);
@@ -172,6 +184,12 @@ describe("MedalSale", function () {
       expect(await mockERC20.balanceOf(buyer4.address)).to.equal(buyer4Tokens);
       expect(await medalSale.addressEthSpent(buyer4.address)).to.equal(0);
 
+      await medalSale.connect(buyer5).claimFractions();
+      expect(await mockERC20.balanceOf(buyer5.address)).to.equal(buyer5Tokens);
+      expect(await medalSale.addressEthSpent(buyer5.address)).to.equal(0);
+
+      await expect(medalSale.connect(buyer1).claimFractions()).to.be.revertedWith("No tokens to claim");
+
       const presaleTokenBalance = await mockERC20.balanceOf(await medalSale.getAddress());
       expect(presaleTokenBalance).to.be.lt(parseEther("10000"));
     });
@@ -188,7 +206,7 @@ describe("MedalSale", function () {
       );
 
       const presaleContractBalance = await ethers.provider.getBalance(await medalSale.getAddress());
-      const platformFee = presaleContractBalance / 50n;
+      const platformFee = presaleContractBalance / 5n;
 
       await medalSale.connect(owner).withdrawEth();
       expect(await medalSale.addressEthSpent(owner.address)).to.equal(0);

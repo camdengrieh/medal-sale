@@ -18,6 +18,8 @@ const deployerPrivateKey =
   process.env.DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 // If not set, it uses ours Etherscan default API key.
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
+const baseApiKey = "IAHHWK35I84W4E3XSDW4AW1HSBR9XVN5QD";
+const arbiscanApiKey = process.env.ARBISCAN_API_KEY || "YH32Y1BW7S274WTD6FY4IWYJH52VIX6UGU";
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -121,7 +123,39 @@ const config: HardhatUserConfig = {
   },
   // configuration for harhdat-verify plugin
   etherscan: {
-    apiKey: `${etherscanApiKey}`,
+    apiKey: {
+      arbitrumSepolia: `${arbiscanApiKey}`,
+      arbitrum: `${arbiscanApiKey}`,
+      mainnet: `${etherscanApiKey}`,
+      sepolia: `${etherscanApiKey}`,
+      base: `${baseApiKey}`,
+      baseSepolia: `${baseApiKey}`,
+    },
+    customChains: [
+      {
+        network: "arbitrumSepolia",
+        chainId: 421614,
+        urls: {
+          apiURL: "https://api-sepolia.arbiscan.io/api",
+          browserURL: "https://sepolia.arbiscan.io",
+        },
+      },
+      {
+        network: "arbitrum",
+        chainId: 42161,
+        urls: { apiURL: "https://api.arbiscan.io/api", browserURL: "https://arbiscan.io" },
+      },
+      {
+        network: "base",
+        chainId: 8453,
+        urls: { apiURL: "https://api.basescan.org/api", browserURL: "https://basescan.org" },
+      },
+      {
+        network: "baseSepolia",
+        chainId: 84532,
+        urls: { apiURL: "https://api-sepolia.basescan.org/api", browserURL: "https://sepolia.basescan.org" },
+      },
+    ],
   },
   // configuration for etherscan-verify from hardhat-deploy plugin
   verify: {

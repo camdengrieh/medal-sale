@@ -26,12 +26,13 @@
     transition: all 0.3s ease-in-out;
   }
   .animate-gold-border {
-    @apply animate-border rounded-2xl bg-white bg-gradient-to-r from-yellow-500 via-amber-200 to-amber-400 bg-[length:400%_400%] p-1;
+    @apply animate-border rounded-2xl shadow-2xl bg-white bg-gradient-to-r from-yellow-500 via-amber-200 to-amber-400 bg-[length:400%_400%] p-1;
   }
   .animate-border-child {
     @apply block w-full rounded-xl bg-base-300 px-3 py-2 font-bold text-white;
   }
-  
+  /* @apply block w-full rounded-xl bg-gradient-to-tl from-red-900 to-sky-900 px-3 py-2 font-bold text-white; */
+
 }
 
 .gold-border {

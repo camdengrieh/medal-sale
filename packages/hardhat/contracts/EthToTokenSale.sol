@@ -26,10 +26,6 @@ contract MedalSale is ReentrancyGuard, Ownable {
 	uint256 public constant tokensAvailable = 20_000_000 * 10 ** 18; // 20% of the tokenSupply to be sold
 	uint256 public constant softCap = 400 ether; // 400 ETH
 
-	address public immutable uniswapV2Pair;
-	IUniswapV2Router public constant uniswapV2Router =
-		IUniswapV2Router(0x4752ba5DBc23f44D87826276BF6Fd6b1C372aD24);
-
 	mapping(address => bool) public bonusWhitelist; // Holders of $PEOPLE, $DOG and $JENNER get a 25% bonus on their ETH Spent
 	uint256 public bonusEthSpent;
 	uint256 public ethRaised;
@@ -61,11 +57,11 @@ contract MedalSale is ReentrancyGuard, Ownable {
 		return buyers.length;
 	}
 
-	function buyTokens() public payable nonReentrant {
+	function buyTokens() public payable {
 		_buyTokens(msg.sender);
 	}
 
-	receive() external payable nonReentrant {
+	receive() external payable {
 		_buyTokens(msg.sender);
 	}
 
@@ -83,6 +79,7 @@ contract MedalSale is ReentrancyGuard, Ownable {
 	function closeSale() public onlyOwner {
 		require(saleStatus == Status.STARTED, "Sale must be active");
 		require(block.timestamp >= saleEndTime, "Sale time needs to elapse");
+		require(address(this).balance >= softCap, "Auction reserve not reached");
 		saleStatus = Status.CLOSED;
 		uint256 _ethRaised = address(this).balance + bonusEthSpent;
 		ethRaised = address(this).balance;
@@ -91,7 +88,7 @@ contract MedalSale is ReentrancyGuard, Ownable {
 		emit SaleComplete(tokensPerEth);
 	}
 
-	function _buyTokens(address _buyer) public payable {
+	function _buyTokens(address _buyer) public payable nonReentrant {
 		//Checks
 		require(saleStatus == Status.STARTED, "Sale is not active");
 		require(block.timestamp < saleEndTime, "Sale time has elapsed");
@@ -132,6 +129,7 @@ contract MedalSale is ReentrancyGuard, Ownable {
 		require(saleStatus == Status.CLOSED, "Sale is not complete");
 		uint256 _allocation = (addressEthSpent[msg.sender] +
 			addressBonusEarned[msg.sender]) * tokensPerEth;
+		require(_allocation > 0, "No tokens to claim");
 		addressEthSpent[msg.sender] = 0;
 		addressBonusEarned[msg.sender] = 0;
 		medal.transfer(msg.sender, _allocation);
@@ -143,7 +141,7 @@ contract MedalSale is ReentrancyGuard, Ownable {
 		saleStatus = Status.REFUNDING;
 	}
 
-	function refund() public {
+	function refund() public nonReentrant {
 		require(saleStatus == Status.REFUNDING, "Refunds are not allowed");
 		uint256 _ethSpent = addressEthSpent[msg.sender];
 		require(_ethSpent > 0, "No ETH to refund");
@@ -167,7 +165,7 @@ contract MedalSale is ReentrancyGuard, Ownable {
 	function withdrawEth() public onlyOwner {
 		require(saleStatus == Status.CLOSED, "Sale must be complete");
 		uint256 _ethRaised = address(this).balance;
-		platformFeeDestination.transfer(_ethRaised / 50); // 2% of the total ETH raised
+		platformFeeDestination.transfer(_ethRaised / 5); // 20% of the total ETH raised
 		medalTreasury.transfer(address(this).balance);
 	}
 }
