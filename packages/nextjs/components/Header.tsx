@@ -4,7 +4,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AtSymbolIcon, BanknotesIcon, Bars3Icon, BugAntIcon, HomeIcon } from "@heroicons/react/24/outline";
+import { AtSymbolIcon, BanknotesIcon, Bars3Icon, HomeIcon } from "@heroicons/react/24/outline";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
@@ -32,11 +32,6 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "https://twitter.com/1976medal",
     icon: <AtSymbolIcon className="h-4 w-4" />,
     target: "_blank",
-  },
-  {
-    label: "Debug Contracts",
-    href: "/debug",
-    icon: <BugAntIcon className="h-4 w-4" />,
   },
 ];
 

@@ -1,0 +1,39 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/interfaces/IMedalSale.sol": {
+      "content": "//SPDX-License-Identifier: MIT\n\npragma solidity 0.8.26;\ninterface IMedalSale {\n    function addressEthSpent(address) external view returns (uint256);\n    function addressTokenBalances(address) external view returns (uint256);\n\n    function ethRaised() external view returns (uint256);\n    function requiredEth() external view returns (uint256);\n    function individualEthCap() external view returns (uint256);\n    \n    function tokenAddress() external view returns (address);\n    function uniswapV2Pair() external view returns (address);\n\n    function protocolFeeDestination() external view returns (address);\n\n    function tokensSold() external view returns (uint256);\n    function tokensAvailable() external view returns (uint256);\n    function tokensPerEth() external view returns (uint256);\n\n    function buyers(uint256) external view returns (address);\n    function buyersLength() external view returns (uint256);\n}\n"
+    },
+    "contracts/peripherals/MedalSaleReader.sol": {
+      "content": "//SPDX-License-Identifier: MIT\n\npragma solidity 0.8.26;\n\nimport \"../interfaces/IMedalSale.sol\";\n\ncontract MedalSaleReader {\n    \n    string public constant name = \"Medal Sale Reader\";\n    constructor() {\n    }\n\n    function getBuyers (address _medalSale) public view returns (address[] memory) {\n        IMedalSale medalSale = IMedalSale(_medalSale);\n\n        uint256 _buyersLength = medalSale.buyersLength();\n        address[] memory _buyers = new address[](_buyersLength);\n\n        for (uint256 i; i < _buyersLength; i++) {\n            _buyers[i] = medalSale.buyers(i);\n        }\n\n        return _buyers;\n    }\n\n    function getAllBuyersBalances(address _medalSale) external view returns (uint256[] memory) {\n        IMedalSale medalSale = IMedalSale(_medalSale);\n\n        uint256 _buyersLength = medalSale.buyersLength();\n        address[] memory _buyers = getBuyers(_medalSale);\n        uint256[] memory _buyersBalances = new uint256[](_buyersLength);\n\n        for (uint256 i; i < _buyers.length; i++) {\n            _buyersBalances[i] = medalSale.addressEthSpent(_buyers[i]);\n        }\n        \n        return _buyersBalances;\n    }\n    \n    function getAllBuyersContributions(address _medalSale) external view returns (uint256[] memory) {\n        IMedalSale medalSale = IMedalSale(_medalSale);\n\n        uint256 _buyersLength = medalSale.buyersLength();\n        address[] memory _buyers = getBuyers(_medalSale);\n        uint256[] memory _buyersContributions = new uint256[](_buyersLength);\n\n        for (uint256 i; i < _buyers.length; i++) {\n            _buyersContributions[i] = medalSale.addressEthSpent(_buyers[i]);\n        }\n        \n        return _buyersContributions;\n    }\n}"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "paris",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

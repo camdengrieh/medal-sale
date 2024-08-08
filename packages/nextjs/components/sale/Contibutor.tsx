@@ -35,23 +35,28 @@ export const Contributor = ({ isConnected, userAddress, saleBalance }: Contribut
       console.error("Error buying tokens", error);
     }
   };
-
   return (
     <div className="w-full flex justify-center py-10 relative animate-gold-border max-w-[612px]">
       <div className="w-4/5 shadow-xl p-8 z-10 animate-border-child ">
         <h1 className="text-3xl font-bold mb-4 text-center gold-gradient-text">CONTRIBUTE</h1>
-        <p className="text-md mb-6 text-white text-center">
-          Below are your contribution details, including the ability to contribute ETH to the auction.
-        </p>
-        <div className="flex gap-y-2 text-md animate-gold-border rounded-xl justify-center">
-          <div className="animate-border-child ">
-            <div className=" text-white text-center">YOUR CONTRIBUTION: {formatEther(userContribution || 0n)} ETH</div>
-            {userBonus !== 0n && (
-              <div className=" text-white text-center">BONUS CONTRIBUTION: {formatEther(userBonus || 0n)} ETH</div>
-            )}
-            <div className=" text-white text-center">PERCENT OF SALE OWNED: {percentageOfSale.toFixed(4)}%</div>
-          </div>
-        </div>
+        {(userContribution as bigint) > 0n && (
+          <>
+            <p className="text-md mb-6 text-white text-center">
+              Below are your contribution details, including the ability to contribute ETH to the auction.
+            </p>
+            <div className="flex gap-y-2 text-md animate-gold-border rounded-xl justify-center">
+              <div className="animate-border-child ">
+                <div className=" text-white text-center">
+                  YOUR CONTRIBUTION: {formatEther(userContribution || 0n)} ETH
+                </div>
+                {userBonus !== 0n && (
+                  <div className=" text-white text-center">BONUS CONTRIBUTION: {formatEther(userBonus || 0n)} ETH</div>
+                )}
+                <div className=" text-white text-center">PERCENT OF SALE OWNED: {percentageOfSale.toFixed(4)}%</div>
+              </div>
+            </div>
+          </>
+        )}
         {isConnected ? (
           <div className="flex flex-col items-center mt-6">
             <label className="input flex items-center gap-2 mb-4 text-white">
@@ -85,7 +90,8 @@ export const Contributor = ({ isConnected, userAddress, saleBalance }: Contribut
           </div>
         )}
         <p className="mt-1 text-sm gold-gradient-text text-center">
-          Note: The amount you contribute will be used to purchase tokens at the current sale rate. Ensure you have
+          Note: The amount you contribute will be used to purchase tokens at the end of the auction. What you contribute
+          and receive in $MEDAL is proportionate to the percentage of the auction you have contributed. Ensure you have
           sufficient balance before proceeding.
         </p>
       </div>

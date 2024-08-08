@@ -1,12 +1,11 @@
 //SPDX-License-Identifier: MIT
 //Compatible with OpenZeppelin Contracts ^5.0.0
 
+//3Studio 2024
+
 pragma solidity 0.8.26;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./dex/interfaces/IUniswapV2Router.sol";
-import "./dex/interfaces/IUniswapV2Factory.sol";
-//No reentrancy guard
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -79,7 +78,10 @@ contract MedalSale is ReentrancyGuard, Ownable {
 	function closeSale() public onlyOwner {
 		require(saleStatus == Status.STARTED, "Sale must be active");
 		require(block.timestamp >= saleEndTime, "Sale time needs to elapse");
-		require(address(this).balance >= softCap, "Auction reserve not reached");
+		require(
+			address(this).balance >= softCap,
+			"Auction reserve not reached"
+		);
 		saleStatus = Status.CLOSED;
 		uint256 _ethRaised = address(this).balance + bonusEthSpent;
 		ethRaised = address(this).balance;
@@ -141,6 +143,10 @@ contract MedalSale is ReentrancyGuard, Ownable {
 		saleStatus = Status.REFUNDING;
 	}
 
+	function resetSale() public onlyOwner {
+		saleStatus = Status.NOT_STARTED;
+	}
+
 	function refund() public nonReentrant {
 		require(saleStatus == Status.REFUNDING, "Refunds are not allowed");
 		uint256 _ethSpent = addressEthSpent[msg.sender];
@@ -167,5 +173,20 @@ contract MedalSale is ReentrancyGuard, Ownable {
 		uint256 _ethRaised = address(this).balance;
 		platformFeeDestination.transfer(_ethRaised / 5); // 20% of the total ETH raised
 		medalTreasury.transfer(address(this).balance);
+	}
+
+	function sweepTokens() public onlyOwner {
+		uint256 _balance = medal.balanceOf(address(this));
+		if (saleStatus == Status.NOT_STARTED) {
+			//If the sale has not started, return the tokens to the treasury
+			medal.transfer(msg.sender, _balance);
+		} else {
+			//Wait for at least 30 days after the sale is complete
+			require(
+				block.timestamp >= saleEndTime + 30 days,
+				"Cannot sweep tokens yet"
+			);
+			medal.transfer(msg.sender, _balance);
+		}
 	}
 }
