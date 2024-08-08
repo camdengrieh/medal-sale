@@ -75,7 +75,7 @@ const Home: NextPage = () => {
           </h1>
           <p className="text-white font-bold max-sm:text-sm text-md leading-relaxed text-center max-w-2xl mx-auto mt-5">
             Learn more about the 1976 Olympic Gold Medal and how we&apos;re making ownership of this rare piece of
-            history accessible to everyone, in our{" "}
+            history accessible to everyone, in our{"  "}
             <a
               href="https://1976medal.medium.com/broken-history-or-breaking-history-1976-olympic-gold-medal-auctioned-off-in-100-million-pieces-2b5ae52706cd"
               className="link"
