@@ -50,8 +50,8 @@ export const HeaderMenuLinks = () => {
               target={target}
               rel={target === "_blank" ? "noopener noreferrer" : undefined}
               className={`${
-                isActive ? "bg-secondary shadow-md" : ""
-              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col overflow-hidden`}
+                isActive ? "outline-warning text-warning shadow-md" : ""
+              } outline hover:outline-warning hover:text-warning hover:shadow-md focus:!bg-warning active:!text-neutral py-1.5 px-3 text-sm rounded-md overflow-hidden`}
             >
               {icon}
               <span>{label}</span>
@@ -90,7 +90,7 @@ export const Header = () => {
           {isDrawerOpen && (
             <ul
               tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-compact dropdown-content mt-3 p-2 gap-y-2 shadow bg-base-100 rounded-box w-52"
               onClick={() => {
                 setIsDrawerOpen(false);
               }}

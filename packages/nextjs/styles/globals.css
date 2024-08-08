@@ -12,14 +12,8 @@
   .gold-gradient-text {
     @apply bg-gradient-to-br from-yellow-500 via-amber-200 to-amber-400 bg-clip-text text-transparent;
   }
-  .gold-gradient-border {
+  .bg-gold-gradient {
     @apply bg-gradient-to-br from-yellow-500 via-amber-200 to-amber-400;
-    border-radius: calc(3.5rem - 1px);
-  }
-  
-  .btn-gold-hover {
-    @apply bg-gradient-to-br from-yellow-500 via-amber-200 to-amber-400;
-    transition: all 0.3s ease-in-out;
   }
   .btn-primary-gold {
     @apply inline-block rounded border-2 border-warning px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-warning transition duration-150 ease-in-out hover:bg-warning hover:text-primary-content focus:outline-none active:border-warning motion-reduce:transition-none;
@@ -30,6 +24,9 @@
   }
   .animate-border-child {
     @apply block w-full rounded-xl bg-base-300 px-3 py-2 font-bold text-white;
+  }
+  .gold-card {
+    @apply bg-base-300 shadow-xl p-8 z-10 w-full md:w-[612px] animate-gold-border;
   }
   /* @apply block w-full rounded-xl bg-gradient-to-tl from-red-900 to-sky-900 px-3 py-2 font-bold text-white; */
 
