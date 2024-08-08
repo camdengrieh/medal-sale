@@ -36,7 +36,7 @@ export const Contributor = ({ isConnected, userAddress, saleBalance }: Contribut
     }
   };
   return (
-    <div className="w-full flex justify-center py-10 relative animate-gold-border max-w-[612px]">
+    <div className="flex justify-center py-10 relative animate-gold-border w-screen md:w-[612px]">
       <div className="w-4/5 shadow-xl p-8 z-10 animate-border-child ">
         <h1 className="text-3xl font-bold mb-4 text-center gold-gradient-text">CONTRIBUTE</h1>
         {(userContribution as bigint) > 0n && (
@@ -58,7 +58,7 @@ export const Contributor = ({ isConnected, userAddress, saleBalance }: Contribut
           </>
         )}
         {isConnected ? (
-          <div className="flex flex-col items-center mt-6">
+          <div className="flex flex-col items-center">
             <label className="input flex items-center gap-2 mb-4 text-white">
               ETH:
               <input
@@ -89,10 +89,9 @@ export const Contributor = ({ isConnected, userAddress, saleBalance }: Contribut
             <RainbowKitCustomConnectButton />
           </div>
         )}
-        <p className="mt-1 text-sm gold-gradient-text text-center">
+        <p className="mt-1 text-xs md:text-sm gold-gradient-text text-center">
           Note: The amount you contribute will be used to purchase tokens at the end of the auction. What you contribute
-          and receive in $MEDAL is proportionate to the percentage of the auction you have contributed. Ensure you have
-          sufficient balance before proceeding.
+          and receive in $MEDAL is proportionate to the percentage of the auction you have contributed.
         </p>
       </div>
     </div>

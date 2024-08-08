@@ -1,3 +1,5 @@
+"use client";
+
 import { Balance } from "../scaffold-eth";
 import Countdown from "react-countdown";
 import { useGlobalState } from "~~/services/store/store";
@@ -39,14 +41,13 @@ export const SaleProgress = ({ saleBalance, saleAddress }: SaleProgressProps) =>
   };
 
   return (
-    <div className=" bg-base-300 shadow-xl p-8 relative z-10  max-w-[612px] animate-gold-border">
+    <div className="bg-base-300 shadow-xl p-8 relative z-10 max-sm w-full md:w-[612px] animate-gold-border">
       <div className="animate-border-child">
         <h1 className="text-3xl font-bold mb-4 text-center bg-gradient-to-br from-yellow-500 via-amber-200 to-amber-400 bg-clip-text text-transparent">
           AUCTION STATS
         </h1>
-        <p className="text-MD mb-6 text-white text-center">
-          Monitor the progress of the auction with live updates. Track the total value raised, countdown to the end of
-          the auction, and projected market values based on current contributions.
+        <p className="text-sm mb-6 gold-gradient-text text-center">
+          Projected market values based on current contributions.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="text-xl text-white text-center">RAISED:</div>
