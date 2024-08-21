@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { NextPage } from "next";
 import Countdown from "react-countdown";
 import { formatEther } from "viem";
@@ -7,6 +8,7 @@ import { useAccount } from "wagmi";
 import { Contributor } from "~~/components/sale/Contibutor";
 import { Distribution } from "~~/components/sale/Distribution";
 import { SaleProgress } from "~~/components/sale/Progress";
+import { Refund } from "~~/components/sale/Refund";
 import useSaleContractInfo from "~~/hooks/sale/useSaleContract";
 import { useWatchBalance } from "~~/hooks/scaffold-eth";
 
@@ -16,6 +18,7 @@ const Home: NextPage = () => {
   const endTimestamp = 1724328419000;
 
   const { saleAddress, buyers, buyerContributions } = useSaleContractInfo(connectedAddress as string);
+  const [completed, setCompleted] = useState(false);
 
   const {
     data: totalRaised,
@@ -34,8 +37,14 @@ const Home: NextPage = () => {
     return <div>Error...</div>;
   }
 
-  const Completionist = () => <span>You can now claim your token allocation!</span>;
-
+  const Completionist = () => (
+    <div className="text-xl text-white text-center">
+      <span className="text-center justify-center">
+        The sale has now concluded. If the soft cap has not been reached, you will be able to claim any contributions to
+        the sale via the refund section below.
+      </span>
+    </div>
+  );
   // Renderer callback with condition
   const renderer = ({
     days,
@@ -51,6 +60,7 @@ const Home: NextPage = () => {
     completed: boolean;
   }) => {
     if (completed) {
+      setCompleted(true);
       // Render a completed state
       return <Completionist />;
     } else {
@@ -86,7 +96,7 @@ const Home: NextPage = () => {
 
           <div className="gold-card mt-2">
             <div className="flex flex-col justify-center animate-border-child">
-              <div className="text-xl gold-gradient-text text-center">ENDS IN:</div>
+              {!completed && <div className="text-xl gold-gradient-text text-center">ENDS IN:</div>}
               <Countdown className="text-lg text-white text-center" date={endTimestamp} renderer={renderer}>
                 <span className="text-white">Auction has finished!</span>
               </Countdown>
@@ -97,13 +107,23 @@ const Home: NextPage = () => {
 
       <div className="flex-grow bg-base-400 px-8 py-4">
         <div className="flex justify-center gap-4 flex-col overflow-hidden">
-          <Contributor isConnected={isConnected} userAddress={connectedAddress ?? ""} saleBalance={formattedBalance} />
-          <SaleProgress saleAddress={saleAddress as string} saleBalance={formattedBalance} />
-          <Distribution
-            buyers={buyers as string[]}
-            totalRaised={formattedBalance}
-            buyersContributions={buyerContributions as bigint[]}
-          />
+          {completed ? (
+            <Refund isConnected={isConnected} userAddress={connectedAddress ?? ""} saleBalance={formattedBalance} />
+          ) : (
+            <>
+              <Contributor
+                isConnected={isConnected}
+                userAddress={connectedAddress ?? ""}
+                saleBalance={formattedBalance}
+              />
+              <SaleProgress saleAddress={saleAddress as string} saleBalance={formattedBalance} />
+              <Distribution
+                buyers={buyers as string[]}
+                totalRaised={formattedBalance}
+                buyersContributions={buyerContributions as bigint[]}
+              />
+            </>
+          )}
         </div>
       </div>
     </div>
